@@ -6,6 +6,7 @@
     "jquery": "~1.7"
   },
   "devDependencies": {
-    "qunit": "~1.19"
+    "qunit": "~1.19",
+    "qunit-phantomjs-runner" : "~2.1"
   }
 }

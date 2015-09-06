@@ -6,4 +6,4 @@ before_script:
   - npm install -g casperjs
   - bower install
 script:
-  - "DISPLAY=:99.0 casperjs test test/index.html"
+  - "phantomjs bower_components/qunit-phantomjs-runner/runner.js test/index.html"
