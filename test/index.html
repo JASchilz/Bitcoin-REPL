@@ -82,6 +82,34 @@
                 }
             }
         });
+
+        QUnit.test( "Test OP_NEGATE", function( assert ) {
+
+            for (var i = -200; i <= 200; i+=19) {
+                var command = "( " + i +") OP_NEGATE";
+                var state = bitcoin_repl.State(command);
+                state.eval();
+
+                var result = state.toString().trim().replace(" ", "");
+                var expectation = "(" + (-1 * i) + ")";
+
+                assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+            }
+        });
+
+        QUnit.test( "Test OP_ABS", function( assert ) {
+
+            for (var i = -200; i <= 200; i+=19) {
+                var command = "( " + i +") OP_ABS";
+                var state = bitcoin_repl.State(command);
+                state.eval();
+
+                var result = state.toString().trim().replace(" ", "");
+                var expectation = "(" + Math.abs(i) + ")";
+
+                assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+            }
+        });
     </script>
 </body>
 </html>
