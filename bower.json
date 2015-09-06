@@ -1,0 +1,11 @@
+{
+  "name": "Bitcoin-REPL",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery.terminal": "0.8.8",
+    "jquery": "~1.7"
+  },
+  "devDependencies": {
+    "qunit": "~1.19"
+  }
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>BTC-REPL: Interactive Bitcoin Script Interpreter</title>
+
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <link href="bower_components/jquery.terminal/css/jquery.terminal.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/jquery.terminal/js/jquery.terminal-min.js"></script>
+
+    <script src="src/constants.js"></script>
+    <script src="src/interpreter.js"></script>
+    <script src="src/commands.js"></script>
+
+    <script>
+        jQuery(function($, undefined) {
+
+            var shiftDown = false;
+
+            $('#bitcoin-repl').terminal(function(command, term) {
+                if (command !== '') {
+                    try {
+                        if(command[0] === ":") {
+
+                            term.echo(commands.doCommand(command));
+
+                        } else {
+                            var state = bitcoin_repl.State(command);
+
+                            if (shiftDown) {
+                                state.step();
+                                term.set_command(state.toString());
+                            } else {
+                                state.eval();
+                                term.echo(state.toString());
+                            }
+                        }
+                    } catch(e) {
+                        term.error(new String(e));
+                    }
+                } else {
+                    term.echo('');
+                }
+            }, {
+
+                greetings: constants.greetings + constants.motd,
+                name: 'btc_repl',
+                prompt: '>>> ',
+                keydown: function(event, terminal) {
+
+                    if (event.shiftKey) {
+                        shiftDown = true;
+
+                        // Handle shift-enter
+                        if (event.which == 13 || event.keyCode == 13) {
+                            var command = terminal.get_command();
+                            terminal.set_command("");
+                            terminal.exec(command);
+                            return false;
+                        }
+                    } else {
+                        shiftDown = false;
+                    }
+                }
+
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div id="bitcoin-repl"></div>
+
+</body>
+</html>
