@@ -3,6 +3,7 @@ node_js:
   - "0.10"
 before_script:
   - npm install -g bower
+  - npm install -g casperjs
   - bower install
 script:
-  - "DISPLAY=:99.0 ./bin/casperjs test tests/index.html"
+  - "DISPLAY=:99.0 casperjs test tests/index.html"
