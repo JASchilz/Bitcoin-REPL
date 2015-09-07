@@ -95,3 +95,19 @@ QUnit.test( "Test OP_ABS", function( assert ) {
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
 });
+
+QUnit.test( "Test OP_EQUAL", function( assert ) {
+
+    for (var i = -20; i <= 20; i+=10) {
+        for (var j = -20; j <= 20; j+=10) {
+            var command = "( " + i + " " + j + ") OP_EQUAL";
+            var state = bitcoin_repl.State(command);
+            state.eval();
+
+            var result = state.toString().trim().replace(" ", "");
+            var expectation = "(" + (i === j ? 1 : 0) + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
