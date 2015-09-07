@@ -70,7 +70,7 @@ QUnit.test( "Test OP_SUB", function( assert ) {
 
 QUnit.test( "Test OP_NEGATE", function( assert ) {
 
-    for (var i = -200; i <= 200; i+=19) {
+    for (var i = -100; i <= 100; i+=19) {
         var command = "( " + i +") OP_NEGATE";
         var state = bitcoin_repl.State(command);
         state.eval();
@@ -84,7 +84,7 @@ QUnit.test( "Test OP_NEGATE", function( assert ) {
 
 QUnit.test( "Test OP_ABS", function( assert ) {
 
-    for (var i = -200; i <= 200; i+=19) {
+    for (var i = -100; i <= 100; i+=19) {
         var command = "( " + i +") OP_ABS";
         var state = bitcoin_repl.State(command);
         state.eval();
@@ -109,5 +109,33 @@ QUnit.test( "Test OP_EQUAL", function( assert ) {
 
             assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
         }
+    }
+});
+
+QUnit.test( "Test OP_1ADD", function( assert ) {
+
+    for (var i = -100; i <= 100; i+=19) {
+        var command = "( " + i +") OP_1ADD";
+        var state = bitcoin_repl.State(command);
+        state.eval();
+
+        var result = state.toString().trim().replace(" ", "");
+        var expectation = "(" + (i + 1) + ")";
+
+        assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+    }
+});
+
+QUnit.test( "Test OP_1SUB", function( assert ) {
+
+    for (var i = -100; i <= 100; i+=19) {
+        var command = "( " + i +") OP_1SUB";
+        var state = bitcoin_repl.State(command);
+        state.eval();
+
+        var result = state.toString().trim().replace(" ", "");
+        var expectation = "(" + (i - 1) + ")";
+
+        assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
 });
