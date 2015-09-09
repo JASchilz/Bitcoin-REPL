@@ -1,4 +1,4 @@
-var constants = {
+bitcoin_repl.constants = {
 
     greetings: '' +
     '   _______   __    __                          __                    _______   ________  _______   __        \n' +

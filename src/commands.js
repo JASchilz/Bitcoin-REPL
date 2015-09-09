@@ -1,4 +1,4 @@
-var commands = (function() {
+bitcoin_repl.commands = (function() {
 
     var command_defs = {
         help: function(args) {

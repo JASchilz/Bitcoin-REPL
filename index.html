@@ -12,8 +12,12 @@
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/jquery.terminal/js/jquery.terminal-min.js"></script>
 
-    <script src="src/constants.js"></script>
+    <!--<script src="bower_components/cryptojslib/rollups/ripemd160.js"></script>-->
+    <!--<script src="bower_components/cryptojslib/rollups/sha1.js"></script>-->
+    <script src="bower_components/cryptojslib/rollups/sha256.js"></script>
+
     <script src="src/interpreter.js"></script>
+    <script src="src/constants.js"></script>
     <script src="src/commands.js"></script>
 
     <script>
@@ -26,10 +30,10 @@
                     try {
                         if(command[0] === ":") {
 
-                            term.echo(commands.doCommand(command));
+                            term.echo(bitcoin_repl.commands.doCommand(command));
 
                         } else {
-                            var state = bitcoin_repl.State(command);
+                            var state = bitcoin_repl.state(command);
 
                             if (shiftDown) {
                                 state.step();
@@ -40,6 +44,7 @@
                             }
                         }
                     } catch(e) {
+                        console.log(e);
                         term.error(new String(e));
                     }
                 } else {
@@ -47,7 +52,7 @@
                 }
             }, {
 
-                greetings: constants.greetings + constants.motd,
+                greetings: bitcoin_repl.constants.greetings + bitcoin_repl.constants.motd,
                 name: 'btc_repl',
                 prompt: '>>> ',
                 keydown: function(event, terminal) {

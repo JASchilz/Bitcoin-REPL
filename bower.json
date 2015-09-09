@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "jquery.terminal": "0.8.8",
-    "jquery": "~1.7"
+    "jquery": "~1.7",
+    "cryptojslib": "~3"
   },
   "devDependencies": {
     "qunit": "~1.19",

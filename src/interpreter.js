@@ -74,7 +74,7 @@ var bitcoin_repl = (function() {
         OP_NEGATE: [        1,  1, true, true, function(args) { return [ -1 * args[0] ]; }],
         OP_ABS: [           1,  1, true, true, function(args) { return [ Math.abs(args[0]) ]; }],
         OP_NOT: [           1,  1, true, true, function(args) { return [ args[0] === 0 ? 1 : 0]; }],
-        OP_0NOTEQUAL: [     0,  0, true, false, function() { return []; }],
+        OP_0NOTEQUAL: [     1,  1, true, true, function(args) { return [ args[0] === 0 ? 0 : 1]; }],
         OP_ADD: [           2,  1, true, true, function(args) {return args[0] + args[1];}],
         OP_SUB: [           2,  1, true, true, function(args) {return args[0] - args[1];}],
         OP_MUL: [           0,  0, false, false, function() { return []; }],
@@ -96,7 +96,7 @@ var bitcoin_repl = (function() {
         OP_WITHIN: [        0,  0, true, false, function() { return []; }],
         OP_RIPEMD160: [     1,  1, true, false, function(args) { return []; }],
         OP_SHA1: [          1,  1, true, false, function(args) { return []; }],
-        OP_SHA256: [        1,  1, true, false, function(args) { return []; }],
+        OP_SHA256: [        1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA256(CryptoJS.lib.WordArray.init([args[0]])) ]; }],
         OP_HASH160: [       1,  1, true, false, function(args) { return []; }],
         OP_HASH256: [       1,  1, true, false, function(args) { return []; }],
         OP_CODESEPARATOR: [ 1,  1, true, false, function(args) { return []; }],
@@ -106,8 +106,12 @@ var bitcoin_repl = (function() {
         OP_CHECKMULTISIGVERIFY: [ 1,  1, true, false, function(args) { return []; }]
     };
 
-    /* Script */
-    var Script = function(text) {
+    function isValidHex(text) {
+        return text.substr(0, 2).toLowerCase() == "0x" && text.substr(2).search(/[0-9A-F]/gi) !== -1;
+    }
+
+    /* script */
+    var script = function(text) {
 
         var ops = [];
         if (text !== "") {
@@ -122,7 +126,7 @@ var bitcoin_repl = (function() {
                 }
 
                 if (!op_defs[ops[i]][IS_ENABLED]) {
-                    throw "The operation " + ops[i] + " is described as 'disabled' in the Script spec and not " +
+                    throw "The operation " + ops[i] + " is described as 'disabled' in the script spec and not " +
                     "available in Bitcoin-REPL.";
                 }
 
@@ -151,13 +155,13 @@ var bitcoin_repl = (function() {
         }
     };
 
-    /* Stack */
-    var Stack = function(text) {
+    /* stack */
+    var stack = function(text) {
 
         var elements = [];
         if (text !== "") {
             elements = text.trim().split(" ").map(function (x) {
-                return parseInt(x, 10);
+                return isValidHex(x) ? x : parseInt(x, 10);
             });
         }
 
@@ -183,8 +187,8 @@ var bitcoin_repl = (function() {
         }
     };
 
-    /* State */
-    var State = function(text) {
+    /* state */
+    var state = function(text) {
 
         var scriptText, stackText;
         if (text.indexOf(")") !== -1) {
@@ -197,30 +201,30 @@ var bitcoin_repl = (function() {
             scriptText = text.trim();
         }
 
-        var script = Script(scriptText);
-        var stack = Stack(stackText);
+        var thisScript = script(scriptText);
+        var thisStack = stack(stackText);
 
         function eval() {
-            while (!script.isEmpty()) {
+            while (!thisScript.isEmpty()) {
                 step();
             }
         }
 
         function step() {
-            if (!script.isEmpty()) {
-                var op = op_defs[script.pop()];
+            if (!thisScript.isEmpty()) {
+                var op = op_defs[thisScript.pop()];
 
                 var closure = op[CLOSURE];
-                var args = stack.pop(op[NUM_INPUTS]);
+                var args = thisStack.pop(op[NUM_INPUTS]);
 
                 var outputs = closure(args);
 
-                stack.push(outputs);
+                thisStack.push(outputs);
             }
         }
 
         function toString() {
-            return stack.toString() + " " + script.toString();
+            return thisStack.toString() + " " + thisScript.toString();
         }
 
         return {
@@ -233,7 +237,7 @@ var bitcoin_repl = (function() {
     };
 
     return {
-        State: State,
+        state: state,
         op_defs: op_defs,
         NUM_INPUTS: NUM_INPUTS,
         NUM_OUTPUTS: NUM_OUTPUTS,
