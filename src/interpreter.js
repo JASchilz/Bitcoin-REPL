@@ -6,6 +6,22 @@ var bitcoin_repl = (function() {
     var IS_IMPLEMENTED = 3;
     var CLOSURE = 4;
 
+    var encodeNum = function(text) {
+        var hex;
+
+        if (isPrefixedHex(text)) {
+            hex = text.substring(2);
+        } else if (isLegalInt(text)) {
+            hex = parseInt(text).toString(16);
+
+            if (hex.length % 2 !== 0) {
+                hex = "0" + hex;
+            }
+        }
+        console.log(hex);
+        return CryptoJS.enc.Hex.parse(hex)
+    };
+
     var op_defs = {
         OP_0: [             0,  1, true, false, function() { return [0]; }],
         OP_FALSE: [         0,  1, true, false, function() { return [0]; }],
@@ -96,7 +112,7 @@ var bitcoin_repl = (function() {
         OP_WITHIN: [        0,  0, true, false, function() { return []; }],
         OP_RIPEMD160: [     1,  1, true, false, function(args) { return []; }],
         OP_SHA1: [          1,  1, true, false, function(args) { return []; }],
-        OP_SHA256: [        1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA256(CryptoJS.lib.WordArray.init([args[0]])) ]; }],
+        OP_SHA256: [        1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA256(encodeNum(args[0])) ]; }],
         OP_HASH160: [       1,  1, true, false, function(args) { return []; }],
         OP_HASH256: [       1,  1, true, false, function(args) { return []; }],
         OP_CODESEPARATOR: [ 1,  1, true, false, function(args) { return []; }],
@@ -106,8 +122,14 @@ var bitcoin_repl = (function() {
         OP_CHECKMULTISIGVERIFY: [ 1,  1, true, false, function(args) { return []; }]
     };
 
-    function isValidHex(text) {
-        return text.substr(0, 2).toLowerCase() == "0x" && text.substr(2).search(/[0-9A-F]/gi) !== -1;
+    function isPrefixedHex(text) {
+        return typeof(text) === "string" &&
+            text.substring(0, 2).toLowerCase() == "0x" &&
+            text.substring(2).search(/[0-9A-F]/gi) !== -1;
+    }
+
+    var isLegalInt = function(text) {
+        return /^\+?(0|[1-9]\d*)$/.test(text);
     }
 
     /* script */
@@ -161,7 +183,7 @@ var bitcoin_repl = (function() {
         var elements = [];
         if (text !== "") {
             elements = text.trim().split(" ").map(function (x) {
-                return isValidHex(x) ? x : parseInt(x, 10);
+                return isPrefixedHex(x) ? x : parseInt(x, 10);
             });
         }
 
