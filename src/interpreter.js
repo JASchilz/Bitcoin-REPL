@@ -110,7 +110,7 @@ var bitcoin_repl = (function() {
         OP_SHA1: [          1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA1(encodeNum(args[0])) ]; }],
         OP_SHA256: [        1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA256(encodeNum(args[0])) ]; }],
         OP_HASH160: [       1,  1, true, true, function(args) { return [ "0x" + CryptoJS.RIPEMD160(CryptoJS.SHA256(encodeNum(args[0]))) ]; }],
-        OP_HASH256: [       1,  1, true, false, function(args) { return []; }],
+        OP_HASH256: [       1,  1, true, true, function(args) { return [ "0x" + CryptoJS.SHA256(CryptoJS.SHA256(encodeNum(args[0]))) ]; }],
         OP_CODESEPARATOR: [ 1,  1, true, false, function(args) { return []; }],
         OP_CHECKSIG: [      1,  1, true, false, function(args) { return []; }],
         OP_CHECKSIGVERIFY: [1,  1, true, false, function(args) { return []; }],
