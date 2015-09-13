@@ -65,7 +65,7 @@ var bitcoin_repl = (function() {
         OP_2DROP: [         2,  0, true, true, function(args) { return []; }],
         OP_2DUP: [          2,  4, true, true, function(args) { return [ args[0], args[1], args[0], args[1] ]; }],
         OP_3DUP: [          3,  6, true, true, function(args) { return [ args[0], args[1], args[2], args[0], args[1], args[2] ]; }],
-        OP_2OVER: [         0,  0, true, false, function() { return []; }],
+        OP_2OVER: [         4,  6, true, true, function(args) { return [ args[0], args[1], args[2], args[3], args[0], args[1] ]; }],
         OP_2ROT: [          0,  0, true, false, function() { return []; }],
         OP_2SWAP: [         0,  0, true, false, function() { return []; }],
         OP_CAT: [           0,  0, false, false, function() { return []; }],
