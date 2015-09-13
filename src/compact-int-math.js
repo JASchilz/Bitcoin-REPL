@@ -1,17 +1,19 @@
 bitcoin_repl.math = (function() {
 
     var negate = function(hexString) {
-        var result, isZero;
+        var result;
 
-        isZero = /^[x0]+$/.test(hexString);
-
-        if (isZero) {
+        if (isZero(hexString)) {
             result = hexString;
         } else {
             result = hexString ^ signMask(hexString);
         }
 
         return intToHex(result);
+    };
+
+    var isZero = function(hexString) {
+        return /^[x0]+$/.test(hexString);
     };
 
     var applyPrefix = function(hexString) {
@@ -74,7 +76,7 @@ bitcoin_repl.math = (function() {
     };
 
     var bool = function(hexString) {
-        return hexToInt(hexString) === 0;
+        return !isZero(hexString);
     };
 
     return {
