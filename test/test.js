@@ -1,17 +1,20 @@
-var intToHex = function(num) {
-
-    var hex;
-
-    hex = parseInt(num).toString(16);
-
-    if (hex.length % 2 !== 0) {
-        hex = "0" + hex;
-    }
-
-    return "0x" + hex;
-};
-
 var math = bitcoin_repl.math;
+
+var runTestDictionary = function(assert, testedCommands) {
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim();
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+};
 
 
 QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP", function( assert ) {
@@ -21,19 +24,7 @@ QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP", function( assert ) {
         OP_NOP: ""
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 
@@ -45,7 +36,7 @@ QUnit.test( "Test OP_1-OP_16", function( assert ) {
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + intToHex(i) + ")";
+        var expectation = "(" + math.intToHex(i) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
@@ -60,7 +51,7 @@ QUnit.test( "Test OP_ADD", function( assert ) {
             state.eval();
 
             var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + intToHex(i + j) + ")";
+            var expectation = "(" + math.intToHex(i + j) + ")";
 
             assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
         }
@@ -199,19 +190,7 @@ QUnit.test( "Test OP_SHA256", function( assert ) {
         "OP_16 OP_SHA256 OP_SHA256": "0x1405870ede7c8bede02298a878e66eba9e764a1ba55ca16173f7df470fb4089d"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_SHA1", function( assert ) {
@@ -222,19 +201,7 @@ QUnit.test( "Test OP_SHA1", function( assert ) {
         "OP_16 OP_SHA1 OP_SHA1": "0x852627551364cf8b374507d5a63093a0cb26fb6b"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_RIPEMD160", function( assert ) {
@@ -245,19 +212,7 @@ QUnit.test( "Test OP_RIPEMD160", function( assert ) {
         "OP_16 OP_RIPEMD160 OP_RIPEMD160": "0x02f189c43d6a2866409d4db17c9be8568a1aef26"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_HASH160", function( assert ) {
@@ -268,19 +223,7 @@ QUnit.test( "Test OP_HASH160", function( assert ) {
         "OP_16 OP_HASH160 OP_HASH160": "0x341cd1a0302aa9d9793f05d2a42a690c1a98e0f0"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_HASH256", function( assert ) {
@@ -291,19 +234,7 @@ QUnit.test( "Test OP_HASH256", function( assert ) {
         "OP_16 OP_HASH256 OP_HASH256": "0xbe83e263f9677ba071f864368565c693c7727c688f5c14f3924f08706592b56a"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_DUP", function( assert ) {
@@ -312,19 +243,7 @@ QUnit.test( "Test OP_DUP", function( assert ) {
         "OP_1 OP_16 OP_DUP": "0x01 0x10 0x10"
     };
 
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
-
-            var result = state.toString().trim();
-            var expectation = "(" + testedCommands[property] + ")";
-
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
+    runTestDictionary(assert, testedCommands);
 });
 
 QUnit.test( "Test OP_NIP", function( assert ) {
@@ -336,18 +255,13 @@ QUnit.test( "Test OP_NIP", function( assert ) {
 
 });
 
-var runTestDictionary = function(assert, testedCommands) {
-    for (var property in testedCommands) {
-        // If the property is truly an OP name...
-        if (testedCommands.hasOwnProperty(property)) {
-            var command = property;
-            var state = bitcoin_repl.state(command);
-            state.eval();
+QUnit.test( "Test OP_OVER", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_2 OP_3 OP_4 OP_OVER": "0x01 0x02 0x03 0x04 0x03"
+    };
 
-            var result = state.toString().trim();
-            var expectation = "(" + testedCommands[property] + ")";
+    runTestDictionary(assert, testedCommands);
 
-            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
-        }
-    }
-};
+});
+
+
