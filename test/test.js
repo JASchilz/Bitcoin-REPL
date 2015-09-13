@@ -327,4 +327,13 @@ QUnit.test( "Test OP_2OVER", function( assert ) {
 
 });
 
+QUnit.test( "Test OP_2ROT", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_2 OP_3 OP_4 OP_5 OP_6 OP_7 OP_2ROT": "0x01 0x04 0x05 0x06 0x07 0x02 0x03"
+    };
+
+    runTestDictionary(assert, testedCommands);
+
+});
+
 
