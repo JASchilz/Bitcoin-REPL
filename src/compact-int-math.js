@@ -33,6 +33,10 @@ bitcoin_repl.math = (function() {
 
         hexString = Math.abs(int).toString(16);
 
+        if (hexString == "0") {
+            hexString = "";
+        }
+
         if (hexString.length % 2 !== 0) {
             hexString = "0" + hexString;
         }

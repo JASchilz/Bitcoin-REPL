@@ -358,7 +358,7 @@ QUnit.test( "Test OP_IFDUP", function( assert ) {
     var testedCommands = {
         "OP_1 OP_2 OP_IFDUP": "0x01 0x02 0x02",
         "OP_1 OP_2 OP_SHA256 OP_IFDUP": "0x01 0xdbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986 0xdbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986",
-        "OP_1 OP_2 OP_2 OP_SUB OP_IFDUP": "0x01 0x00"
+        "OP_1 OP_2 OP_2 OP_SUB OP_IFDUP": "0x01 0x"
     };
 
     runTestDictionary(assert, testedCommands);
