@@ -213,3 +213,26 @@ QUnit.test( "Test OP_SHA256", function( assert ) {
         }
     }
 });
+
+QUnit.test( "Test OP_SHA1", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_SHA1": "0xbf8b4530d8d246dd74ac53a13471bba17941dff7",
+        "OP_1 OP_SHA1 OP_SHA1": "0x0a2b2a825165ae9742c63b0c6ddafc22f0bd3b1e",
+        "OP_16 OP_SHA1": "0x6e14a407faae939957b80e641a836735bbdcad5a",
+        "OP_16 OP_SHA1 OP_SHA1": "0x852627551364cf8b374507d5a63093a0cb26fb6b"
+    };
+
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim().replace(" ", "");
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
