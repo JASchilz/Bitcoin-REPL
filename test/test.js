@@ -309,6 +309,15 @@ QUnit.test( "Test OP_2DUP", function( assert ) {
 
 });
 
+QUnit.test( "Test OP_3DUP", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_2 OP_3 OP_4 OP_3DUP": "0x01 0x02 0x03 0x04 0x02 0x03 0x04"
+    };
+
+    runTestDictionary(assert, testedCommands);
+
+});
+
 
 
 
