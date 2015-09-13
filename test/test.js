@@ -326,3 +326,28 @@ QUnit.test( "Test OP_DUP", function( assert ) {
         }
     }
 });
+
+QUnit.test( "Test OP_NIP", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_2 OP_3 OP_4 OP_NIP": "0x01 0x02 0x04"
+    };
+
+    runTestDictionary(assert, testedCommands);
+
+});
+
+var runTestDictionary = function(assert, testedCommands) {
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim();
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+};

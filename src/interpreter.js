@@ -55,7 +55,7 @@ var bitcoin_repl = (function() {
         OP_DEPTH: [         0,  0, true, false, function() { return []; }],
         OP_DROP: [          0,  0, true, false, function() { return []; }],
         OP_DUP: [           1,  2, true, true, function(args) { return [ args[0], args[0] ]; }],
-        OP_NIP: [           0,  0, true, false, function() { return []; }],
+        OP_NIP: [           2,  1, true, true, function(args) { return [ args[1] ]; }],
         OP_OVER: [          0,  0, true, false, function() { return []; }],
         OP_PICK: [          0,  0, true, false, function() { return []; }],
         OP_ROLL: [          0,  0, true, false, function() { return []; }],
@@ -126,7 +126,7 @@ var bitcoin_repl = (function() {
 
     var isLegalInt = function(text) {
         return /^\+?(0|[1-9]\d*)$/.test(text);
-    }
+    };
 
     /* script */
     var script = function(text) {
