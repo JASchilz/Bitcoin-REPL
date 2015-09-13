@@ -259,3 +259,26 @@ QUnit.test( "Test OP_RIPEMD160", function( assert ) {
         }
     }
 });
+
+QUnit.test( "Test OP_HASH160", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_HASH160": "0xc51b66bced5e4491001bd702669770dccf440982",
+        "OP_1 OP_HASH160 OP_HASH160": "0xb157bee96d62f6855392b9920385a834c3113d9a",
+        "OP_16 OP_HASH160": "0xa49009e0eab9d9cbe3bd8bb1f04110800072306e",
+        "OP_16 OP_HASH160 OP_HASH160": "0x341cd1a0302aa9d9793f05d2a42a690c1a98e0f0"
+    };
+
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim().replace(" ", "");
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
