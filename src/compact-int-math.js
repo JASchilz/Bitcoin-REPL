@@ -76,7 +76,11 @@ bitcoin_repl.math = (function() {
     };
 
     var bool = function(hexString) {
-        return !isZero(hexString);
+        return isZero(hexString) ? "0x00" : "0x01";
+    };
+
+    var not = function(hexString) {
+        return isZero(hexString) ? "0x01" : "0x00";
     };
 
     return {
@@ -84,7 +88,8 @@ bitcoin_repl.math = (function() {
         intToHex: intToHex,
         sum: sum,
         abs: abs,
-        bool: bool
+        bool: bool,
+        not: not
     };
 
 })();
