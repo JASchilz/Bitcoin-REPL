@@ -190,3 +190,26 @@ QUnit.test( "Test OP_0NOTEQUAL", function( assert ) {
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
 });
+
+QUnit.test( "Test OP_SHA256", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_SHA256": "0x4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+        "OP_1 OP_SHA256 OP_SHA256": "0x9c12cfdc04c74584d787ac3d23772132c18524bc7ab28dec4219b8fc5b425f70",
+        "OP_16 OP_SHA256": "0xc555eab45d08845ae9f10d452a99bfcb06f74a50b988fe7e48dd323789b88ee3",
+        "OP_16 OP_SHA256 OP_SHA256": "0x1405870ede7c8bede02298a878e66eba9e764a1ba55ca16173f7df470fb4089d"
+    };
+
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim().replace(" ", "");
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
