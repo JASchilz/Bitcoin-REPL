@@ -305,3 +305,24 @@ QUnit.test( "Test OP_HASH256", function( assert ) {
         }
     }
 });
+
+QUnit.test( "Test OP_DUP", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_DUP": "0x01 0x01",
+        "OP_1 OP_16 OP_DUP": "0x01 0x10 0x10"
+    };
+
+    for (var property in testedCommands) {
+        // If the property is truly an OP name...
+        if (testedCommands.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+            state.eval();
+
+            var result = state.toString().trim();
+            var expectation = "(" + testedCommands[property] + ")";
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
