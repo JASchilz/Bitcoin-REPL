@@ -157,17 +157,17 @@ QUnit.test( "Test OP_1SUB", function( assert ) {
 
 QUnit.test( "Test OP_NOT", function( assert ) {
     for (var i = -2; i <= 2; i++) {
-        var command = "( " + i +") OP_NOT";
+        var command = "( " + math.intToHex(i) +") OP_NOT";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
 
-        var expectation = "(0)";
+        var expectation = "(0x00)";
         if (i === 0) {
-            expectation = "(1)";
+            expectation = "(0x01)";
         } else if (i === 1) {
-            expectation = "(0)";
+            expectation = "(0x00)";
         }
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
@@ -176,15 +176,15 @@ QUnit.test( "Test OP_NOT", function( assert ) {
 
 QUnit.test( "Test OP_0NOTEQUAL", function( assert ) {
     for (var i = -2; i <= 2; i++) {
-        var command = "( " + i +") OP_0NOTEQUAL";
+        var command = "( " + math.intToHex(i) +") OP_0NOTEQUAL";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
 
-        var expectation = "(1)";
+        var expectation = "(0x01)";
         if (i === 0) {
-            expectation = "(0)";
+            expectation = "(0x00)";
         }
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
