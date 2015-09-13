@@ -4,7 +4,7 @@
 Bitcoin-REPL
 ===============
 
-Interactive interpreter for Bitcoin Script. See it in action at [http://bitcoin-repl.com](http://www.bitcoin-repl.com/).
+Interactive interpreter for Bitcoin Script. See it in action at [bitcoin-repl.com](https://bitcoin-repl.com/).
 
 If you decide to use Bitcoin-REPL for a class, [let me know](<mailto:Joseph@Schilz.org>)!
 
@@ -12,7 +12,7 @@ If you decide to use Bitcoin-REPL for a class, [let me know](<mailto:Joseph@Schi
 Installation
 ============
 
-Though you can freely use the official, hosted version of this project at [http://bitcoin-repl.com](http://www.bitcoin-repl.com/), you can also easily run your own copy.
+Though you can freely use the official, hosted version of this project at [bitcoin-repl.com](https://bitcoin-repl.com/), you can also easily run your own copy.
 
 Bitcoin-REPL uses Bower for dependency management. Visit [Bower.io](https://bower.io) for information on installing and using Bower.
  
