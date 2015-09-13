@@ -60,7 +60,7 @@ var bitcoin_repl = (function() {
         OP_PICK: [          0,  0, true, false, function() { return []; }],
         OP_ROLL: [          0,  0, true, false, function() { return []; }],
         OP_ROT: [           3,  3, true, true, function(args) { return [ args[1], args[2], args[0] ]; }],
-        OP_SWAP: [          0,  0, true, false, function() { return []; }],
+        OP_SWAP: [          2,  2, true, true, function(args) { return [ args[1], args[0] ]; }],
         OP_TUCK: [          0,  0, true, false, function() { return []; }],
         OP_2DROP: [         0,  0, true, false, function() { return []; }],
         OP_2DUP: [          0,  0, true, false, function() { return []; }],

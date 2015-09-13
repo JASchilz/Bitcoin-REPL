@@ -273,4 +273,16 @@ QUnit.test( "Test OP_ROT", function( assert ) {
 
 });
 
+QUnit.test( "Test OP_SWAP", function( assert ) {
+    var testedCommands = {
+        "OP_1 OP_2 OP_3 OP_4 OP_SWAP": "0x01 0x02 0x04 0x03"
+    };
+
+    runTestDictionary(assert, testedCommands);
+
+});
+
+
+
+
 
