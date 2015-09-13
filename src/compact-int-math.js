@@ -64,10 +64,8 @@ bitcoin_repl.math = (function() {
 
         sum = 0;
         for (i = 0; i < operands.length; i++) {
-            console.log(hexToInt(operands[i]));
             sum += hexToInt(operands[i]);
         }
-        console.log(sum);
         return intToHex(sum);
     };
 
