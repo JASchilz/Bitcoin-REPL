@@ -24,11 +24,31 @@ Use
 
 Once in the Bitcoin-REPL terminal, try typing `:help` or `:operations` for more instructions.
 
+Here are a few examples:
+
+Enter a list of operations and press enter to evaluate:
+```
+>>> OP_1 OP_2 OP_ADD       'enter'
+(0x03)
+>>> 
+```
+
+Pressing shift-enter will evaluate a single instruction:
+```
+>>> OP_1 OP_2 OP_ADD       'shift-enter'
+>>> (0x01) OP_2 OP_ADD     'shift-enter'
+>>> (0x01 0x02) OP_ADD     'shift-enter'
+```
+
+Stack contents are represented in parenthesis with the stack-head to the right.
+
 
 Todo
 ====
 
-See GitHub [issue tracker](https://github.com/JASchilz/Bitcoin-REPL/issues/).
+Many of the operations are not-yet implemented. However, this project is under active development and most or all operations will be added shortly.
+
+See GitHub [issue tracker](https://github.com/JASchilz/Bitcoin-REPL/issues/) for additional issues.
 
 
 Getting Involved
