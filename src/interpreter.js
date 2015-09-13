@@ -1,4 +1,5 @@
 var bitcoin_repl = (function() {
+    var math = bitcoin_repl.math;
 
     var NUM_INPUTS = 0;
     var NUM_OUTPUTS = 1;
@@ -12,13 +13,8 @@ var bitcoin_repl = (function() {
         if (isPrefixedHex(text)) {
             hex = text.substring(2);
         } else if (isLegalInt(text)) {
-            hex = parseInt(text).toString(16);
-
-            if (hex.length % 2 !== 0) {
-                hex = "0" + hex;
-            }
+            hex = bitcoin_repl.math.intToHex(parseInt(text));
         }
-        console.log(hex);
         return CryptoJS.enc.Hex.parse(hex)
     };
 
@@ -28,24 +24,24 @@ var bitcoin_repl = (function() {
         OP_PUSHDATA1: [     0,  1, true, false, function() { return [0]; }],
         OP_PUSHDATA2: [     0,  1, true, false, function() { return [0]; }],
         OP_PUSHDATA4: [     0,  1, true, false, function() { return [0]; }],
-        OP_1NEGATE: [       0,  1, true, true, function() { return [-1]; }],
-        OP_TRUE: [          0,  1, true, true, function() { return [1]; }],
-        OP_1: [             0,  1, true, true, function() { return [1]; }],
-        OP_2: [             0,  1, true, true, function() { return [2]; }],
-        OP_3: [             0,  1, true, true, function() { return [3]; }],
-        OP_4: [             0,  1, true, true, function() { return [4]; }],
-        OP_5: [             0,  1, true, true, function() { return [5]; }],
-        OP_6: [             0,  1, true, true, function() { return [6]; }],
-        OP_7: [             0,  1, true, true, function() { return [7]; }],
-        OP_8: [             0,  1, true, true, function() { return [8]; }],
-        OP_9: [             0,  1, true, true, function() { return [9]; }],
-        OP_10: [            0,  1, true, true, function() { return [10]; }],
-        OP_11: [            0,  1, true, true, function() { return [11]; }],
-        OP_12: [            0,  1, true, true, function() { return [12]; }],
-        OP_13: [            0,  1, true, true, function() { return [13]; }],
-        OP_14: [            0,  1, true, true, function() { return [14]; }],
-        OP_15: [            0,  1, true, true, function() { return [15]; }],
-        OP_16: [            0,  1, true, true, function() { return [16]; }],
+        OP_1NEGATE: [       0,  1, true, true, function() { return ["0x81"]; }],
+        OP_TRUE: [          0,  1, true, true, function() { return ["0x01"]; }],
+        OP_1: [             0,  1, true, true, function() { return ["0x01"]; }],
+        OP_2: [             0,  1, true, true, function() { return ["0x02"]; }],
+        OP_3: [             0,  1, true, true, function() { return ["0x03"]; }],
+        OP_4: [             0,  1, true, true, function() { return ["0x04"]; }],
+        OP_5: [             0,  1, true, true, function() { return ["0x05"]; }],
+        OP_6: [             0,  1, true, true, function() { return ["0x06"]; }],
+        OP_7: [             0,  1, true, true, function() { return ["0x07"]; }],
+        OP_8: [             0,  1, true, true, function() { return ["0x08"]; }],
+        OP_9: [             0,  1, true, true, function() { return ["0x09"]; }],
+        OP_10: [            0,  1, true, true, function() { return ["0x0a"]; }],
+        OP_11: [            0,  1, true, true, function() { return ["0x0b"]; }],
+        OP_12: [            0,  1, true, true, function() { return ["0x0c"]; }],
+        OP_13: [            0,  1, true, true, function() { return ["0x0d"]; }],
+        OP_14: [            0,  1, true, true, function() { return ["0x0e"]; }],
+        OP_15: [            0,  1, true, true, function() { return ["0x0f"]; }],
+        OP_16: [            0,  1, true, true, function() { return ["0x10"]; }],
         OP_NOP: [           0,  0, true, true, function() { return []; }],
         OP_IF: [            0,  0, true, false, function() { return []; }],
         OP_NOTIF: [         0,  0, true, false, function() { return []; }],
@@ -83,16 +79,16 @@ var bitcoin_repl = (function() {
         OP_XOR: [           0,  0, false, false, function() { return []; }],
         OP_EQUAL: [         2,  1, true, true, function(args) { return args[0] === args[1] ? [1] : [0]; }],
         OP_EQUALVERIFY: [   0,  0, true, false, function() { return []; }],
-        OP_1ADD: [          1,  1, true, true, function(args) { return [args[0] + 1]; }],
-        OP_1SUB: [          1,  1, true, true, function(args) { return [args[0] - 1]; }],
+        OP_1ADD: [          1,  1, true, true, function(args) { return [math.sum([args[0], "0x01"])]; }],
+        OP_1SUB: [          1,  1, true, true, function(args) { return [math.sum([args[0], "0x81"])]; }],
         OP_2MUL: [          0,  0, false, false, function() { return []; }],
         OP_2DIV: [          0,  0, false, false, function() { return []; }],
-        OP_NEGATE: [        1,  1, true, true, function(args) { return [ -1 * args[0] ]; }],
-        OP_ABS: [           1,  1, true, true, function(args) { return [ Math.abs(args[0]) ]; }],
+        OP_NEGATE: [        1,  1, true, true, function(args) { return [ math.negate(args[0]) ]; }],
+        OP_ABS: [           1,  1, true, true, function(args) { return [ math.abs(args[0])]; }],
         OP_NOT: [           1,  1, true, true, function(args) { return [ args[0] === 0 ? 1 : 0]; }],
         OP_0NOTEQUAL: [     1,  1, true, true, function(args) { return [ args[0] === 0 ? 0 : 1]; }],
-        OP_ADD: [           2,  1, true, true, function(args) {return args[0] + args[1];}],
-        OP_SUB: [           2,  1, true, true, function(args) {return args[0] - args[1];}],
+        OP_ADD: [           2,  1, true, true, function(args) {return [math.sum([args[0], args[1]])];}],
+        OP_SUB: [           2,  1, true, true, function(args) {return [math.sum([args[0], math.negate(args[1])])];}],
         OP_MUL: [           0,  0, false, false, function() { return []; }],
         OP_DIV: [           0,  0, false, false, function() { return []; }],
         OP_MOD: [           0,  0, false, false, function() { return []; }],
@@ -261,6 +257,7 @@ var bitcoin_repl = (function() {
     return {
         state: state,
         op_defs: op_defs,
+        math: math,
         NUM_INPUTS: NUM_INPUTS,
         NUM_OUTPUTS: NUM_OUTPUTS,
         IS_ENABLED: IS_ENABLED,

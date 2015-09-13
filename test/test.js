@@ -1,8 +1,23 @@
+var intToHex = function(num) {
+
+    var hex;
+
+    hex = parseInt(num).toString(16);
+
+    if (hex.length % 2 !== 0) {
+        hex = "0" + hex;
+    }
+
+    return "0x" + hex;
+};
+
+var math = bitcoin_repl.math;
+
 
 QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP", function( assert ) {
     var testedCommands = {
-        OP_1NEGATE: "-1",
-        OP_TRUE: "1",
+        OP_1NEGATE: "0x81",
+        OP_TRUE: "0x01",
         OP_NOP: ""
     };
 
@@ -30,7 +45,7 @@ QUnit.test( "Test OP_1-OP_16", function( assert ) {
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + i + ")";
+        var expectation = "(" + intToHex(i) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
@@ -45,7 +60,7 @@ QUnit.test( "Test OP_ADD", function( assert ) {
             state.eval();
 
             var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + (i + j) + ")";
+            var expectation = "(" + intToHex(i + j) + ")";
 
             assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
         }
@@ -61,7 +76,7 @@ QUnit.test( "Test OP_SUB", function( assert ) {
             state.eval();
 
             var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + (i - j) + ")";
+            var expectation = "(" + math.intToHex(i - j) + ")";
 
             assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
         }
@@ -71,12 +86,12 @@ QUnit.test( "Test OP_SUB", function( assert ) {
 QUnit.test( "Test OP_NEGATE", function( assert ) {
 
     for (var i = -100; i <= 100; i+=19) {
-        var command = "( " + i +") OP_NEGATE";
+        var command = "( " + math.intToHex(i) +") OP_NEGATE";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + (-1 * i) + ")";
+        var expectation = "(" + math.intToHex(-1 * i) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
@@ -85,12 +100,12 @@ QUnit.test( "Test OP_NEGATE", function( assert ) {
 QUnit.test( "Test OP_ABS", function( assert ) {
 
     for (var i = -100; i <= 100; i+=19) {
-        var command = "( " + i +") OP_ABS";
+        var command = "( " + math.intToHex(i) +") OP_ABS";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + Math.abs(i) + ")";
+        var expectation = "(" + math.intToHex(Math.abs(i)) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
@@ -115,12 +130,12 @@ QUnit.test( "Test OP_EQUAL", function( assert ) {
 QUnit.test( "Test OP_1ADD", function( assert ) {
 
     for (var i = -100; i <= 100; i+=19) {
-        var command = "( " + i +") OP_1ADD";
+        var command = "( " + math.intToHex(i) +") OP_1ADD";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + (i + 1) + ")";
+        var expectation = "(" + math.intToHex(i + 1) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
@@ -129,12 +144,12 @@ QUnit.test( "Test OP_1ADD", function( assert ) {
 QUnit.test( "Test OP_1SUB", function( assert ) {
 
     for (var i = -100; i <= 100; i+=19) {
-        var command = "( " + i +") OP_1SUB";
+        var command = "( " + math.intToHex(i) +") OP_1SUB";
         var state = bitcoin_repl.state(command);
         state.eval();
 
         var result = state.toString().trim().replace(" ", "");
-        var expectation = "(" + (i - 1) + ")";
+        var expectation = "(" + math.intToHex(i - 1) + ")";
 
         assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
     }
