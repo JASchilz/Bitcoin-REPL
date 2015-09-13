@@ -22,8 +22,8 @@ bitcoin_repl.constants = {
     'For more information about the Bitcoin Script language, visit https://en.bitcoin.it/wiki/Script. \n\n' +
     'To begin, type a set of commands at the terminal prompt. For example: \n' +
     '    >>> OP_1 OP_2 OP_ADD \n' +
-    'is a valid script. Pressing "enter" to evaluate the script yields:\n' +
-    '    ( 3)\n\n' +
+    'is a valid script. Pressing "enter" to evaluate the script yields a hexidecimal-encoded 3:\n' +
+    '    (0x03)\n\n' +
     'Elements in parentheses represent stack contents, with the stack head on the right. \n\n' +
     'You may also press "shift:enter" to evaluate a single step in the script.\n',
 

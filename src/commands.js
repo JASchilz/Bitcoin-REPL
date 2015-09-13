@@ -2,10 +2,10 @@ bitcoin_repl.commands = (function() {
 
     var command_defs = {
         help: function(args) {
-            return constants.help;
+            return bitcoin_repl.constants.help;
         },
         about: function(args) {
-            return constants.about;
+            return bitcoin_repl.constants.about;
         },
         operations: function(args) {
             var valid_and_implemented = [];
