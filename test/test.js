@@ -120,7 +120,7 @@ QUnit.test( "Test OP_EQUAL", function( assert ) {
             state.eval();
 
             var result = state.toString().trim().replace(" ", "");
-            var expectation = "(" + (i === j ? 1 : 0) + ")";
+            var expectation = "(" + (i === j ? "0x01" : "0x00") + ")";
 
             assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
         }
