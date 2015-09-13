@@ -17,10 +17,11 @@ var runTestDictionary = function(assert, testedCommands) {
 };
 
 
-QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP", function( assert ) {
+QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP, OP_FALSE", function( assert ) {
     var testedCommands = {
         OP_1NEGATE: "0x81",
         OP_TRUE: "0x01",
+        OP_FALSE: "0x",
         OP_NOP: ""
     };
 
@@ -28,9 +29,9 @@ QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP", function( assert ) {
 });
 
 
-QUnit.test( "Test OP_1-OP_16", function( assert ) {
+QUnit.test( "Test OP_0-OP_16", function( assert ) {
 
-    for (var i = 1; i <= 16; i++) {
+    for (var i = 0; i <= 16; i++) {
         var command = "OP_" + i;
         var state = bitcoin_repl.state(command);
         state.eval();

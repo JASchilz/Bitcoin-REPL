@@ -19,8 +19,8 @@ var bitcoin_repl = (function() {
     };
 
     var op_defs = {
-        OP_0: [             0,  1, true, false, function() { return [0]; }],
-        OP_FALSE: [         0,  1, true, false, function() { return [0]; }],
+        OP_0: [             0,  1, true, true, function() { return ["0x"]; }],
+        OP_FALSE: [         0,  1, true, true, function() { return ["0x"]; }],
         OP_PUSHDATA1: [     0,  1, true, false, function() { return [0]; }],
         OP_PUSHDATA2: [     0,  1, true, false, function() { return [0]; }],
         OP_PUSHDATA4: [     0,  1, true, false, function() { return [0]; }],
