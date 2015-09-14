@@ -16,6 +16,28 @@ var runTestDictionary = function(assert, testedCommands) {
     }
 };
 
+QUnit.test( "Test interpret manual stack", function( assert ) {
+
+    var testedStates = {
+        "(0x)" : "(0x)",
+        "(0x 0x01)" : "(0x 0x01)",
+        "(0x81 0x01) OP_ADD" : "(0x81 0x01) OP_ADD"
+    };
+
+    for (var property in testedStates) {
+        // If the property is truly an OP name...
+        if (testedStates.hasOwnProperty(property)) {
+            var command = property;
+            var state = bitcoin_repl.state(command);
+
+            var result = state.toString().trim();
+            var expectation = testedStates[property];
+
+            assert.equal(result, expectation, "Expected '" + command + "' to evaluate to '" + expectation + "'.");
+        }
+    }
+});
+
 
 QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP, OP_FALSE", function( assert ) {
     var testedCommands = {
@@ -27,7 +49,6 @@ QUnit.test( "Test OP_1NEGATE, OP_TRUE, OP_NOP, OP_FALSE", function( assert ) {
 
     runTestDictionary(assert, testedCommands);
 });
-
 
 QUnit.test( "Test OP_0-OP_16", function( assert ) {
 

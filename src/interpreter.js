@@ -1,16 +1,9 @@
-var bitcoin_repl = (function() {
-    var math = bitcoin_repl.math;
-
-    var NUM_INPUTS = 0;
-    var NUM_OUTPUTS = 1;
-    var IS_ENABLED = 2;
-    var IS_IMPLEMENTED = 3;
-    var CLOSURE = 4;
+bitcoin_repl.interpreter = (function() {
 
     var encodeNum = function(text) {
         var hex;
 
-        if (isPrefixedHex(text)) {
+        if (bitcoin_repl.math.isBytes(text)) {
             hex = text.substring(2);
         } else if (isLegalInt(text)) {
             hex = bitcoin_repl.math.intToHex(parseInt(text));
@@ -19,6 +12,13 @@ var bitcoin_repl = (function() {
     };
 
     var op_defs = {
+        constants: {
+            NUM_INPUTS: 0,
+            NUM_OUTPUTS: 1,
+            IS_ENABLED: 2,
+            IS_IMPLEMENTED: 3,
+            CLOSURE: 4
+        },
         OP_0: [             0,  1, true, true, function() { return ["0x"]; }],
         OP_FALSE: [         0,  1, true, true, function() { return ["0x"]; }],
         OP_PUSHDATA1: [     0,  1, true, false, function() { return [0]; }],
@@ -118,11 +118,7 @@ var bitcoin_repl = (function() {
         OP_CHECKMULTISIGVERIFY: [ 1,  1, true, false, function(args) { return []; }]
     };
 
-    function isPrefixedHex(text) {
-        return typeof(text) === "string" &&
-            text.substring(0, 2).toLowerCase() == "0x" &&
-            text.substring(2).search(/[0-9A-F]/gi) !== -1;
-    }
+
 
     var isLegalInt = function(text) {
         return /^\+?(0|[1-9]\d*)$/.test(text);
@@ -143,12 +139,12 @@ var bitcoin_repl = (function() {
                     throw "Unrecognized operation " + ops[i];
                 }
 
-                if (!op_defs[ops[i]][IS_ENABLED]) {
+                if (!op_defs[ops[i]][op_defs.constants.IS_ENABLED]) {
                     throw "The operation " + ops[i] + " is described as 'disabled' in the script spec and not " +
                     "available in Bitcoin-REPL.";
                 }
 
-                if (!op_defs[ops[i]][IS_IMPLEMENTED]) {
+                if (!op_defs[ops[i]][op_defs.constants.IS_IMPLEMENTED]) {
                     throw "The operation " + ops[i] + " is recognized as a valid operation, however it is not " +
                     "yet implemented in Bitcoin-REPL.";
                 }
@@ -173,96 +169,9 @@ var bitcoin_repl = (function() {
         }
     };
 
-    /* stack */
-    var stack = function(text) {
-
-        var elements = [];
-        if (text !== "") {
-            elements = text.trim().split(" ").map(function (x) {
-                return isPrefixedHex(x) ? x : parseInt(x, 10);
-            });
-        }
-
-        function push(newElements) {
-            elements = elements.concat(newElements);
-        }
-
-        function pop(num) {
-            var ret = elements.slice(elements.length - num);
-            elements = elements.slice(0, elements.length - num);
-
-            return ret;
-        }
-
-        function toString() {
-            return "(" + elements.join(" ") + ")";
-        }
-
-        return {
-            push: push,
-            pop: pop,
-            toString: toString
-        }
-    };
-
-    /* state */
-    var state = function(text) {
-
-        var scriptText, stackText;
-        if (text.indexOf(")") !== -1) {
-            text = text.split(")");
-
-            stackText = text[0].replace("(", "");
-            scriptText = text[1].trim();
-        } else {
-            stackText = "";
-            scriptText = text.trim();
-        }
-
-        var thisScript = script(scriptText);
-        var thisStack = stack(stackText);
-
-        function eval() {
-            while (!thisScript.isEmpty()) {
-                step();
-            }
-        }
-
-        function step() {
-            if (!thisScript.isEmpty()) {
-                var op = op_defs[thisScript.pop()];
-
-                var closure = op[CLOSURE];
-                var args = thisStack.pop(op[NUM_INPUTS]);
-
-                var outputs = closure(args);
-
-                thisStack.push(outputs);
-            }
-        }
-
-        function toString() {
-            return thisStack.toString() + " " + thisScript.toString();
-        }
-
-        return {
-            step: step,
-            eval: eval,
-            toString: toString
-        }
-
-
-    };
-
     return {
-        state: state,
         op_defs: op_defs,
-        math: math,
-        NUM_INPUTS: NUM_INPUTS,
-        NUM_OUTPUTS: NUM_OUTPUTS,
-        IS_ENABLED: IS_ENABLED,
-        IS_IMPLEMENTED: IS_IMPLEMENTED,
-        CLOSURE: CLOSURE
-    }
+        script: script
+    };
 
 })();

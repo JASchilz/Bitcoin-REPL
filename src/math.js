@@ -1,5 +1,11 @@
 bitcoin_repl.math = (function() {
 
+    var isBytes = function (text) {
+        return typeof(text) === "string" &&
+            text.substring(0, 2).toLowerCase() == "0x" &&
+            text.substring(2).search(/[0-9A-F]/gi) !== -1;
+    };
+
     var negate = function(hexString) {
         var result;
 
@@ -88,6 +94,7 @@ bitcoin_repl.math = (function() {
     };
 
     return {
+        isBytes: isBytes,
         negate: negate,
         intToHex: intToHex,
         sum: sum,
