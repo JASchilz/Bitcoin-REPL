@@ -16,6 +16,19 @@ var runTestDictionary = function(assert, testedCommands) {
     }
 };
 
+QUnit.test( "Test math.isBytes", function( assert ) {
+    var isBytes;
+
+    isBytes = bitcoin_repl.math.isBytes;
+
+    assert.equal(isBytes("0x81"), true);
+    assert.equal(isBytes("0x"), true);
+    assert.equal(isBytes("0x01"), true);
+    assert.equal(isBytes("0x4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"), true);
+    assert.equal(isBytes("81"), false);
+    assert.equal(isBytes("Hello!"), false);
+});
+
 QUnit.test( "Test interpret manual stack", function( assert ) {
 
     var testedStates = {
