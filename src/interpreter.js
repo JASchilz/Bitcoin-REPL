@@ -5,8 +5,8 @@ bitcoin_repl.interpreter = (function() {
 
         if (bitcoin_repl.math.isBytes(text)) {
             hex = text.substring(2);
-        } else if (isLegalInt(text)) {
-            hex = bitcoin_repl.math.intToHex(parseInt(text));
+        } else {
+            throw "Invalid bytes '" + text + "' found on stack";
         }
         return CryptoJS.enc.Hex.parse(hex)
     };
@@ -116,12 +116,6 @@ bitcoin_repl.interpreter = (function() {
         OP_CHECKSIGVERIFY: [1,  1, true, false, function(args) { return []; }],
         OP_CHECKMULTISIG: [ 1,  1, true, false, function(args) { return []; }],
         OP_CHECKMULTISIGVERIFY: [ 1,  1, true, false, function(args) { return []; }]
-    };
-
-
-
-    var isLegalInt = function(text) {
-        return /^\+?(0|[1-9]\d*)$/.test(text);
     };
 
     /* script */
