@@ -6,6 +6,8 @@ Bitcoin-REPL
 
 Interactive interpreter for Bitcoin Script. See it in action at [bitcoin-repl.com](https://bitcoin-repl.com/).
 
+![donation-qr-code](assets/screenshot.png)
+
 If you decide to use Bitcoin-REPL for a class, [let me know](<mailto:Joseph@Schilz.org>)!
 
 
@@ -15,7 +17,7 @@ Installation
 Though you can freely use the official, hosted version of this project at [bitcoin-repl.com](https://bitcoin-repl.com/), you can also easily run your own copy.
 
 Bitcoin-REPL uses Bower for dependency management. Visit [Bower.io](http://bower.io) for information on installing and using Bower.
- 
+
 Once you have Bower installed, clone this repository to your host, `cd` into the directory, run `bower install` , and point your web browser at `index.html`.
 
 
@@ -30,7 +32,7 @@ Enter a list of operations and press enter to evaluate:
 ```
 >>> OP_1 OP_2 OP_ADD       'enter'
 (0x03)
->>> 
+>>>
 ```
 
 Pressing shift-enter will evaluate a single instruction:
