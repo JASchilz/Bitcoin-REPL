@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bitcoin-repl by JASchilz</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Bitcoin-repl</h1>
+        <p class="header"></p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/JASchilz/Bitcoin-REPL/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/JASchilz/Bitcoin-REPL/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/JASchilz/Bitcoin-REPL">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/JASchilz">JASchilz</a></p>
+
+
+      </header>
+      <section>
+        <p><a href="https://travis-ci.org/JASchilz/Bitcoin-REPL"><img src="https://travis-ci.org/JASchilz/Bitcoin-REPL.svg?branch=master" alt="Build Status"></a>
+<a href="https://codeclimate.com/github/JASchilz/Bitcoin-REPL"><img src="https://codeclimate.com/github/JASchilz/Bitcoin-REPL/badges/gpa.svg" alt="Code Climate"></a></p>
+
+<h1>
+<a id="bitcoin-repl" class="anchor" href="#bitcoin-repl" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bitcoin-REPL</h1>
+
+<p>Interactive interpreter for Bitcoin Script. See it in action at <a href="https://bitcoin-repl.com/">bitcoin-repl.com</a>.</p>
+
+<p><img src="assets/screenshot.png" alt="donation-qr-code"></p>
+
+<p>If you decide to use Bitcoin-REPL for a class, <a href="mailto:Joseph@Schilz.org">let me know</a>!</p>
+
+<h1>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<p>Though you can freely use the official, hosted version of this project at <a href="https://bitcoin-repl.com/">bitcoin-repl.com</a>, you can also easily run your own copy.</p>
+
+<p>Bitcoin-REPL uses Bower for dependency management. Visit <a href="http://bower.io">Bower.io</a> for information on installing and using Bower.</p>
+
+<p>Once you have Bower installed, clone this repository to your host, <code>cd</code> into the directory, run <code>bower install</code> , and point your web browser at <code>index.html</code>.</p>
+
+<h1>
+<a id="use" class="anchor" href="#use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use</h1>
+
+<p>Once in the Bitcoin-REPL terminal, try typing <code>:help</code> or <code>:operations</code> for more instructions.</p>
+
+<p>Here are a few examples:</p>
+
+<p>Enter a list of operations and press enter to evaluate:</p>
+
+<pre><code>&gt;&gt;&gt; OP_1 OP_2 OP_ADD       'enter'
+(0x03)
+&gt;&gt;&gt;
+</code></pre>
+
+<p>Pressing shift-enter will evaluate a single instruction:</p>
+
+<pre><code>&gt;&gt;&gt; OP_1 OP_2 OP_ADD       'shift-enter'
+&gt;&gt;&gt; (0x01) OP_2 OP_ADD     'shift-enter'
+&gt;&gt;&gt; (0x01 0x02) OP_ADD     'shift-enter'
+</code></pre>
+
+<p>Stack contents are represented in parenthesis with the stack-head to the right.</p>
+
+<h1>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Todo</h1>
+
+<p>Many of the operations are not yet implemented. However, this project is under active development and most or all operations will be added shortly.</p>
+
+<p>See GitHub <a href="https://github.com/JASchilz/Bitcoin-REPL/issues/">issue tracker</a> for additional issues.</p>
+
+<h1>
+<a id="getting-involved" class="anchor" href="#getting-involved" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting Involved</h1>
+
+<p>Feel free to open pull requests or issues. <a href="https://github.com/JASchilz/Bitcoin-REPL/">GitHub</a> is the canonical location of this project.</p>
+
+<p>Here's the general sequence of events for contribution:</p>
+
+<ol>
+<li>Open an issue in the <a href="https://github.com/JASchilz/bitcoin-repl/issues/">issue tracker</a>.</li>
+<li>In any order:
+
+<ul>
+<li>Submit a pull request with a <strong>failing</strong> test that demonstrates the issue/feature.</li>
+<li>Get acknowledgement/concurrence.</li>
+</ul>
+</li>
+<li>Submit pull request that passes your test in (2). Include documentation, if appropriate.</li>
+</ol>
+
+<p>I also welcome contributions in Bitcoin:</p>
+
+<p><img src="assets/Bitcoin-REPL-QR.png" alt="donation-qr-code"></p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
