@@ -14,9 +14,9 @@ Installation
 
 Though you can freely use the official, hosted version of this project at [bitcoin-repl.com](https://bitcoin-repl.com/), you can also easily run your own copy.
 
-Bitcoin-REPL uses Bower for dependency management. Visit [Bower.io](https://bower.io) for information on installing and using Bower.
+Bitcoin-REPL uses Bower for dependency management. Visit [Bower.io](http://bower.io) for information on installing and using Bower.
  
-Once you have Bower installed, clone this repository to your local environment, run `bower install`, and point your web browser at `index.html`.
+Once you have Bower installed, clone this repository to your host, `cd` into the directory, run `bower install` , and point your web browser at `index.html`.
 
 
 Use
@@ -62,7 +62,7 @@ Here's the general sequence of events for contribution:
 2. In any order:
   * Submit a pull request with a **failing** test that demonstrates the issue/feature.
   * Get acknowledgement/concurrence.
-3. Submit pull request that passes your test in (2).
+3. Submit pull request that passes your test in (2). Include documentation, if appropriate.
 
 I also welcome contributions in Bitcoin:
 
